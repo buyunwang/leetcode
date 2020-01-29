@@ -1,1 +1,3 @@
 # leetcode
+
+some leetcode questions
