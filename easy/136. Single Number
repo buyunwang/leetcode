@@ -1,0 +1,19 @@
+Given a non-empty array of integers, every element appears twice except for one. Find that single one.
+
+Note:
+
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        compare_dict = {}
+        for i in nums:
+            if i in compare_dict:
+                compare_dict[i]+=1
+            else:
+                compare_dict[i]=0
+        return compare_dict.keys()[compare_dict.values().index(0)]
