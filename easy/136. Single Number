@@ -17,3 +17,24 @@ class Solution(object):
             else:
                 compare_dict[i]=0
         return compare_dict.keys()[compare_dict.values().index(0)]
+        
+        
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        sort_nums = sorted(nums)
+        if len(sort_nums) == 1:
+            return sort_nums[0]
+        for i in range(0, len(sort_nums)):
+            if i - 1 > 0 and i + 1 < len(sort_nums):
+                if sort_nums[i] != sort_nums[i-1] and sort_nums[i] != sort_nums[i+1]:
+                    return sort_nums[i]
+            elif i - 1 < 0:
+                if sort_nums[i] != sort_nums[i+1]:
+                    return sort_nums[i]
+            else:
+                if sort_nums[i] != sort_nums[i-1]:
+                    return sort_nums[i]
