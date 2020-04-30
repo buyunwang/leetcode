@@ -1,66 +1,47 @@
-Description
-Given an array nums of integers and an int k, partition the array (i.e move the elements in "nums") such that:
+Given a non-empty binary tree, find the maximum path sum.
 
-All elements < k are moved to the left
-All elements >= k are moved to the right
-Return the partitioning index, i.e the first index i nums[i] >= k.
+For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.
 
-public class Solution {
-    /** 
-     *@param nums: The integer array you should partition
-     *@param k: As description
-     *return: The index after partition
-     */
-    public int partitionArray(int[] nums, int k) {
-        if(nums == null || nums.length == 0){
-            return 0;
-        }
-        int left = 0, right = nums.length - 1;
-        while (left <= right) {
+Example 1:
 
-            while (left <= right && nums[left] < k) {
-                left++;
-            }
+Input: [1,2,3]
 
-            while (left <= right && nums[right] >= k) {
-                right--;
-            }
+       1
+      / \
+     2   3
 
-            if (left <= right) {
-                int temp = nums[left];
-                nums[left] = nums[right];
-                nums[right] = temp;
-                
-                left++;
-                right--;
-            }
-        }
-        return left;
-    }
-}
+Output: 6
+Example 2:
 
-Quick select algorithm:
-https://blog.csdn.net/Yaokai_AssultMaster/article/details/68878950
+Input: [-10,9,20,null,null,15,7]
 
-什么是Quick select?
-Quick select算法通常用来在未排序的数组中寻找第k小/第k大的元素。其方法类似于Quick sort。
-Quick select和Quick sort都是由Tony Hoare发明的，因此Quick select算法也被称为是Hoare's selection algorithm。
-Quick select算法因其高效和良好的average case时间复杂度而被广为应用。
-Quick select的average case时间复杂度为O(n)，然而其worst case时间复杂度为O(n^2)。
-总体而言，Quick select采用和Quick sort类似的步骤。首先选定一个pivot，然后根据每个数字与该pivot的大小关系将整个数组分为两部分。
-那么与Quick sort不同的是，
-Quick select只考虑所寻找的目标所在的那一部分子数组，而非像Quick sort一样分别再对两边进行分割。
-正是因为如此，Quick select将平均时间复杂度从O(nlogn)降到了O(n)。
+   -10
+   / \
+  9  20
+    /  \
+   15   7
 
-Quick select算法描述
-Input: array nums, int k. (find kth smallest element in an unsorted array)
-Output: int target
+Output: 42
 
-Choose an element from the array as pivot, exchange the position of pivot and number at the end of the array.
-The pivot can either be the end element or a random chosen element. A random chosen pivot can make the algorithm much possibly run in average case time.
-Partition the array into 2 parts in which the numbers in left subarray is less than (or equal to) the pivot and the numbers in right subarray is greater than (or equal to) the pivot.
-Exchange pivot (at the end of the array now) with the first element in the right part.
-Compare k with length of the left subarray, say, len.
-if k == len + 1， then pivot is the target.
-if k <= len, repeat from step 1 on the left subarray.
-if k > len, k = k - len, repeat from step 1 on the right subarray.
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def maxPathSum(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        self.ans = None
+        def search(root):
+            if root is None:
+                return 0
+            leftMax = search(root.left)
+            rightMax = search(root.right)
+            self.ans = max(max(leftMax, 0) + max(rightMax, 0) + root.val, self.ans)
+            return max(leftMax, rightMax, 0) + root.val
+        search(root)
+        return self.ans
