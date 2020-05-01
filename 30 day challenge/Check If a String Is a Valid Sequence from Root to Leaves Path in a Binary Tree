@@ -59,5 +59,6 @@ class Solution:
             return True
         if (i < l) and (root.val == arr[i]):
             return self.checkPath(root.left, arr, l, i+1) or self.checkPath(root.right, arr, l, i+1)
-            
+        else:
+            return False
             
