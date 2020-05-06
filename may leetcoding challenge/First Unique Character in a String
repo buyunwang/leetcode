@@ -1,0 +1,49 @@
+Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
+
+Examples:
+
+s = "leetcode"
+return 0.
+
+s = "loveleetcode",
+return 2.
+Note: You may assume the string contain only lowercase letters.
+
+# check substring by slicing but very slow since in operation takes O(n) as well so time O(n^2) space O(1)
+class Solution(object):
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        for i, l in enumerate(list(s)):
+            if len(s) == 1:
+                return 0
+            if i == 0 and l not in s[i+1:]:
+                return i
+            if i == len(s)-1 and l not in s[:i]:
+                return i
+            if l not in s[i+1:] and l not in s[:i]:
+                return i
+        return -1
+        
+# construct dict by going through the list once O(n) and then search chars in dict O(n) so time O(n) space O(n)
+class Solution(object):
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        # build hash map : character and how often it appears
+        count = collections.Counter(s)
+        
+        # find the index
+        for idx, ch in enumerate(s):
+            if count[ch] == 1:
+                return idx     
+        return -1
+        
+ Complexity Analysis
+
+Time complexity : O(N) since we go through the string of length N two times.
+Space complexity : O(N) since we have to keep a hash map with N elements.
