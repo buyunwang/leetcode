@@ -37,6 +37,7 @@ Each node has a unique integer value from 1 to 100.
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution(object):
     def isCousins(self, root, x, y):
         """
